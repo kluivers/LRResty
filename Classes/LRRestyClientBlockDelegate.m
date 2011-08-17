@@ -37,16 +37,29 @@ static BOOL _shouldDispatchOnMainQueue = YES;
   [super dealloc];
 }
 
+- (void)restyRequest:(LRRestyRequest *)request didFailWithError:(NSError *)error {
+    if (block) {
+        if (_shouldDispatchOnMainQueue) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                block(nil, error);
+            });
+        }
+        else {
+            block(nil, error);
+        }
+    }
+}
+
 - (void)restyRequest:(LRRestyRequest *)request didFinishWithResponse:(LRRestyResponse *)response
 {
   if (block) {
     if (_shouldDispatchOnMainQueue) {
       dispatch_async(dispatch_get_main_queue(), ^{
-        block(response);
+        block(response, nil);
       });
     }
     else {
-      block(response);
+      block(response, nil);
     }
   }
 }

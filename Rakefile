@@ -1,3 +1,4 @@
+require "rubygems"
 require "bundler/setup"
 require 'plist'
 require 'github/downloads'
@@ -55,17 +56,17 @@ namespace :build do
   
   desc "Build the static library for the simulator platform"
   task :simulator do
-    system("xcodebuild -target LRResty-StaticLib -configuration #{CONFIG} -sdk iphonesimulator#{BASE_SDK}")
+    system("/Developer/usr/bin/xcodebuild -target LRResty-StaticLib -configuration #{CONFIG} -sdk iphonesimulator#{BASE_SDK}")
   end
   
   desc "Build the static library for the device platform"
   task :device do
-    system("xcodebuild -target LRResty-StaticLib -configuration #{CONFIG} -sdk iphoneos#{BASE_SDK}")
+    system("/Developer/usr/bin/xcodebuild -target LRResty-StaticLib -configuration #{CONFIG} -sdk iphoneos#{BASE_SDK}")
   end
   
   desc "Build the framework for the Mac platform"
   task :mac do
-    system("xcodebuild -target LRResty -configuration #{CONFIG}")
+    system("/Developer/usr/bin/xcodebuild -target LRResty -configuration #{CONFIG}")
   end
   
   desc "Build a combined simulator/device static library using lipo"
@@ -76,7 +77,7 @@ namespace :build do
   
   desc "Clean the build products directory"
   task :clean do
-    system("xcodebuild clean")
+    system("/Developer/usr/bin/xcodebuild clean")
   end
 
   FRAMEWORK_NAME = "LRResty.framework"

@@ -15,7 +15,7 @@
 @class LRRestyResponse;
 @class LRRestyRequest;
 
-typedef void (^LRRestyResponseBlock)(LRRestyResponse *response);
+typedef void (^LRRestyResponseBlock)(LRRestyResponse *response, NSError *error);
 typedef void (^LRRestyRequestBlock)(LRRestyRequest *request);
 typedef void (^LRRestyRequestTimeoutBlock)(LRRestyRequest *);
 

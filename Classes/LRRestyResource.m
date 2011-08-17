@@ -105,21 +105,21 @@
 
 - (LRRestyRequest *)get:(LRRestyResourceResponseBlock)responseBlock;
 {
-  return [restClient get:[URL absoluteString] parameters:nil headers:nil withBlock:^(LRRestyResponse *response){
+  return [restClient get:[URL absoluteString] parameters:nil headers:nil withBlock:^(LRRestyResponse *response, NSError *error){
     responseBlock(response, self);
   }];
 }
 
 - (void)post:(LRRestyResourceResponseBlock)responseBlock;
 {
-  [restClient post:[URL absoluteString] payload:nil headers:nil withBlock:^(LRRestyResponse *response){
+  [restClient post:[URL absoluteString] payload:nil headers:nil withBlock:^(LRRestyResponse *response, NSError *error){
     responseBlock(response, self);
   }];
 }
 
 - (void)post:(id)payload callback:(LRRestyResourceResponseBlock)responseBlock;
 {
-  [restClient put:[URL absoluteString] payload:payload headers:nil withBlock:^(LRRestyResponse *response){
+  [restClient put:[URL absoluteString] payload:payload headers:nil withBlock:^(LRRestyResponse *response, NSError *error){
     responseBlock(response, self);
   }];
 }

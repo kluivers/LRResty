@@ -46,7 +46,7 @@
 {
   return [self performAsynchronousBlockWithTimeout:globalTimeoutInterval + 1 andReturnResultWhenReady:^(id *result, NSCondition *condition)
   {
-    [self post:urlString payload:payload withBlock:^(LRRestyResponse *response) {
+    [self post:urlString payload:payload withBlock:^(LRRestyResponse *response, NSError *error) {
       LRSYNCHRONOUS_PROXY_NOTIFY_CONDITION(result, [response retain], condition);
     }];
   }];
@@ -56,7 +56,7 @@
 {
   return [self performAsynchronousBlockAndReturnResultWhenReady:^(id *result, NSCondition *condition)
   {
-    [self post:urlString payload:payload headers:headers withBlock:^(LRRestyResponse *response) {
+    [self post:urlString payload:payload headers:headers withBlock:^(LRRestyResponse *response, NSError *error) {
       LRSYNCHRONOUS_PROXY_NOTIFY_CONDITION(result, [response retain], condition);
     }];
   }];

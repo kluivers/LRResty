@@ -47,7 +47,7 @@
 {
   return [self performAsynchronousBlockAndReturnResultWhenReady:^(id *result, NSCondition *condition)
   {
-    [self delete:urlString withBlock:^(LRRestyResponse *response) {
+    [self delete:urlString withBlock:^(LRRestyResponse *response, NSError *error) {
       LRSYNCHRONOUS_PROXY_NOTIFY_CONDITION(result, [response retain], condition);
     }];
   }];
@@ -57,7 +57,7 @@
 {
   return [self performAsynchronousBlockAndReturnResultWhenReady:^(id *result, NSCondition *condition)
   {
-    [self delete:urlString headers:headers withBlock:^(LRRestyResponse *response) {
+    [self delete:urlString headers:headers withBlock:^(LRRestyResponse *response, NSError *error) {
       LRSYNCHRONOUS_PROXY_NOTIFY_CONDITION(result, [response retain], condition);
     }];
   }];

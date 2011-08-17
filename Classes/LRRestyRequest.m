@@ -160,8 +160,33 @@
 
 #pragma mark -
 
+- (BOOL)connection:(NSURLConnection *)connection canAuthenticateAgainstProtectionSpace:(NSURLProtectionSpace *)protectionSpace {
+    NSLog(@"Auth method: %@", protectionSpace.authenticationMethod);
+    
+    return [protectionSpace.authenticationMethod isEqualToString:NSURLAuthenticationMethodServerTrust] || [protectionSpace.authenticationMethod isEqualToString:NSURLAuthenticationMethodHTTPBasic];
+}
+
 - (void)connection:(NSURLConnection *)connection didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge
 {
+    NSLog(@"%s", __func__);
+    NSLog(@"Auth method: %@", challenge.protectionSpace.authenticationMethod);
+    
+    NSArray *trustedHosts = [NSArray arrayWithObjects:
+                             @"aperture.latest.update-app.appspot.com",
+                             @"update-app.appspot.com",
+                             nil
+                             ];
+    
+    if ([challenge.protectionSpace.authenticationMethod isEqualToString:NSURLAuthenticationMethodServerTrust]) {
+        if ([trustedHosts containsObject:challenge.protectionSpace.host]) {
+            [challenge.sender useCredential:[NSURLCredential credentialForTrust:challenge.protectionSpace.serverTrust] forAuthenticationChallenge:challenge];
+        }
+        
+        return;
+    }
+    
+    
+    
   if (credential && [challenge previousFailureCount] < 1) {
     [[challenge sender] useCredential:credential forAuthenticationChallenge:challenge];
   } else {
